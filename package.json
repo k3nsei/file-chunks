@@ -1,13 +1,27 @@
 {
   "name": "file-chunks",
   "version": "1.0.0",
-  "description": "",
+  "description": "Split file to chunks",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Piotr Stępniewski",
+      "email": "k3nsei.pl@gmail.com",
+      "url": "https://github.com/k3nsei"
+    }
+  ],
+  "homepage": "https://k3nsei.github.io/file-chunks/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k3nsei/file-chunks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/k3nsei/file-chunks/issues"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "yargs": "^7.0.2"
   }
