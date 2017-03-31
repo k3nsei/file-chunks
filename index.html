@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        const fileHash = 'b54b90900ec4c83a0a2da9934d06309ca86497b4';
+        const fileExt = 'xyz';
+
+        Promise.all([
+            fetch(`./output/${fileHash}.0.${fileExt}`).then((res) => res.blob()),
+            fetch(`./output/${fileHash}.1.${fileExt}`).then((res) => res.blob()),
+            fetch(`./output/${fileHash}.2.${fileExt}`).then((res) => res.blob()),
+            fetch(`./output/${fileHash}.3.${fileExt}`).then((res) => res.blob())
+        ]).then((data) => {
+            const blob = new Blob(data);
+            const img = new Image();
+            img.src = URL.createObjectURL(blob);
+            document.body.appendChild(img);
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
