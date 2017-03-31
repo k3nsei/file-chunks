@@ -1,7 +1,5 @@
-# file-chunks
-
-## Usage
+# Usage
 `node index.js --file ./img.png --chunk-size 8`
 
-## License
+# License
 [MIT](https://github.com/k3nsei/file-chunks/blob/master/LICENSE)
