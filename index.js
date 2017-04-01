@@ -1,11 +1,27 @@
 #!/usr/bin/env node
 
-const argv = require('yargs').alias('f', 'file').alias('s', 'chunk-size').argv;
-const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+const path = require('path');
+const argv = require('yargs')
+    .alias('f', 'file')
+    .alias('e', 'file-extension')
+    .alias('s', 'chunk-size')
+    .alias('d', 'output-dir')
+    .argv;
 
-const { file: filePath, 'chunk-size': chunkSize } = argv;
+let {
+    file: filePath,
+    'file-extension': fileExtension,
+    'chunk-size': chunkSize,
+    'output-dir': outputDir,
+} = argv;
+
+outputDir = typeof(outputDir) === 'string' ? path.resolve(outputDir) : path.resolve('output');
+
+const fileExtensionRegExp = /^\.?([0-9a-z]{1,12})$/i;
+const fileExtensionMatch = fileExtensionRegExp.exec(fileExtension);
+fileExtension = (!!fileExtension && fileExtensionMatch !== null) ? fileExtensionMatch[1] : 'chunk';
 
 const hash = crypto.createHash('sha1');
 const chunks = [];
@@ -22,7 +38,23 @@ readableStream.on('readable', () => {
 
 readableStream.on('close', () => {
     const hashString = hash.digest('hex');
+    ensureOutputDirExist(path.join(outputDir, hashString) + '/');
     chunks.forEach((buffer, i) => {
-        fs.writeFileSync(path.resolve(`./output/${hashString}.${i}.xyz`), buffer);
+        fs.writeFileSync(path.join(outputDir, hashString, `${i}.${fileExtension}`), buffer);
     });
 });
+
+function ensureOutputDirExist(dir) {
+    if (fs.existsSync(dir)) {
+        return;
+    }
+    try {
+        fs.mkdirSync(dir);
+    }
+    catch (err) {
+        if (err.code === 'ENOENT') {
+            ensureOutputDirExist(path.dirname(dir));
+            ensureOutputDirExist(dir);
+        }
+    }
+}
