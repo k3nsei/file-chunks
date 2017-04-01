@@ -1,6 +1,6 @@
 {
   "name": "file-chunks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Split file to chunks",
   "license": "MIT",
   "authors": [
